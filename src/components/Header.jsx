@@ -1,6 +1,13 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
+const HeaderComponent = styled.header`
+  left: 0;
+  right: 0;
+  position: fixed;
+  top: 0
+`
+
 const HeaderContainer = styled.div`
   align-items: center;
   background: #000;
@@ -31,7 +38,7 @@ const NavBarLink = styled(NavLink)`
 
 function Header() {
   return (
-    <header>
+    <HeaderComponent>
       <HeaderContainer className="container">
         <Logo>Filmes e Séries</Logo>
         <NavBar>
@@ -39,7 +46,7 @@ function Header() {
           <NavBarLink to="/new">Novo</NavBarLink>
         </NavBar>
       </HeaderContainer>
-    </header>
+    </HeaderComponent>
   );
 }
 
