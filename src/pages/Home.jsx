@@ -1,48 +1,83 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-
-import MoviesHook from "../hooks/MoviesHook";
 
 const MovieList = styled.ul`
     display: grid;
-    gap: 10px
+    gap: 10px;
+    margin-top: 10px
+`
+
+const PageTitle = styled.h2`
+    font-size: 20px;
 `
 
 const MovieItem = styled.a`
     border: 1px solid #000;
+    border-radius: 8px;
     display: grid;
+    gap: 10px;
+    padding-bottom: 10px
 `
 
 const MovieTitle = styled.h4`
     background: #000;
+    border-radius: 8px 8px 0 0;
     color: #fff;
     padding: 10px
 `
 
 const MovieInfo = styled.p`
     color: #000;
-    padding: 5px 10px
-`
-
-const Title = styled.h2`
-    font-size: 22px;
-    padding: 10px 0px
+    padding: 0px 10px
 `
 
 function Home() {
-    const { movies, isLoading } = MoviesHook();
+    const [movies, setMovies] = useState([]);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchMovies = async() => {
+            try {
+                const response = await fetch("https://cautious-wasp-shift.cyclic.app/movies")
+                const data = await response.json();
+                setMovies(data);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setIsLoading(false)
+            }
+        };
+
+        fetchMovies();
+    }, []);
+
+    if (error) {
+        return (
+            <main>
+                <div className="container">
+                    <PageTitle>
+                        500 - Internal Server Error
+                    </PageTitle>
+                </div>
+            </main>
+        )
+    }
 
     return isLoading ? (
         <main>
             <div className="container">
-                <Title>Carregando...</Title>
+                <PageTitle>
+                    Loading...
+                </PageTitle>
             </div>
         </main>
     ) : (
         <main>
             <div className="container">
-                <Title>
-                    Lista
-                </Title>
+                <PageTitle>
+                    Todos os reviews
+                </PageTitle>
                 <MovieList>
                     {movies.movies.map((movie) => (
                         <MovieItem href="/" key={movie._id}>
