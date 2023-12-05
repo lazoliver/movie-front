@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-
-const MovieList = styled.ul`
-    display: grid;
-    gap: 10px;
-    margin-top: 10px
-`
 
 const PageTitle = styled.h2`
     font-size: 20px;
 `
 
-const MovieItem = styled.a`
+const MovieItem = styled.div`
     border: 1px solid #000;
     border-radius: 8px;
     display: grid;
     gap: 10px;
+    margin-top: 10px;
     padding-bottom: 10px
 `
 
@@ -31,26 +27,26 @@ const MovieInfo = styled.p`
     padding: 0px 10px
 `
 
-function Home() {
-    const [movies, setMovies] = useState([]);
+function Movie() {
+    const { id } = useParams();
+    const [movie, setMovie] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchMovies = async() => {
+        const getMovie = async() => {
             try {
-                const response = await fetch("https://cautious-wasp-shift.cyclic.app/movies")
+                const response = await fetch(`https://cautious-wasp-shift.cyclic.app/movies/${id}`)
                 const data = await response.json();
-                setMovies(data);
+                setMovie(data);
             } catch (error) {
                 setError(error);
             } finally {
                 setIsLoading(false)
             }
         };
-
-        fetchMovies();
-    }, []);
+        getMovie();
+    }, [])
 
     if (error) {
         return (
@@ -67,29 +63,21 @@ function Home() {
     return isLoading ? (
         <main>
             <div className="container">
-                <PageTitle>
-                    Loading...
-                </PageTitle>
+                <PageTitle>Loading...</PageTitle>
             </div>
         </main>
     ) : (
         <main>
             <div className="container">
-                <PageTitle>
-                    Todos os reviews
-                </PageTitle>
-                <MovieList>
-                    {movies.movies.map((movie) => (
-                        <MovieItem href={`/movies/${movie._id}`} key={movie._id} id={movie._id}>
-                            <MovieTitle>{movie.title}</MovieTitle>
-                            <MovieInfo>Comentário: {movie.comment}</MovieInfo>
-                            <MovieInfo>Nota: {movie.rating}</MovieInfo>
-                        </MovieItem>
-                    ))}
-                </MovieList>
+                <PageTitle>Review</PageTitle>
+                <MovieItem key={movie.movie._id} id={movie.movie._id}>
+                    <MovieTitle key={movie.movie._id}>{movie.movie.title}</MovieTitle>
+                    <MovieInfo>Comentário: {movie.movie.comment}</MovieInfo>
+                    <MovieInfo>Nota: {movie.movie.rating}</MovieInfo>
+                </MovieItem>
             </div>
         </main>
     )
 }
 
-export default Home;
+export default Movie;
