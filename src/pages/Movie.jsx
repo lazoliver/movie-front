@@ -46,7 +46,7 @@ function Movie() {
             }
         };
         getMovie();
-    }, [])
+    }, [id])
 
     if (error) {
         return (
