@@ -25,7 +25,8 @@ const MovieTitle = styled.h4`
     background: #000;
     border-radius: 8px 8px 0 0;
     color: #fff;
-    padding: 10px
+    padding: 10px;
+    text-transform: capitalize
 `
 
 const MovieInfo = styled.p`
