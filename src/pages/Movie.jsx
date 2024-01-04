@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
+const api = "https://long-lime-gorilla-hat.cyclic.app";
+
 const PageTitle = styled.h2`
     font-size: 20px;
 `
@@ -36,7 +38,7 @@ function Movie() {
     useEffect(() => {
         const getMovie = async() => {
             try {
-                const response = await fetch(`https://long-lime-gorilla-hat.cyclic.app/movies/${id}`)
+                const response = await fetch(`${api}/movies/${id}`)
                 const data = await response.json();
                 setMovie(data);
             } catch (error) {

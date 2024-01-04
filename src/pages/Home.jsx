@@ -81,7 +81,7 @@ function Home() {
                     Todos os reviews
                 </PageTitle>
                 <MovieList>
-                    {movies.movies.map((movie) => (
+                    {movies.map((movie) => (
                         <MovieItem href={`/movies/${movie._id}`} key={movie._id} id={movie._id}>
                             <MovieTitle>{movie.title}</MovieTitle>
                             <MovieInfo>Comentário: {movie.comment}</MovieInfo>
