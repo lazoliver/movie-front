@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+const api = "https://long-lime-gorilla-hat.cyclic.app";
+
 const MovieList = styled.ul`
     display: grid;
     gap: 10px;
@@ -39,7 +41,7 @@ function Home() {
     useEffect(() => {
         const fetchMovies = async() => {
             try {
-                const response = await fetch("https://cautious-wasp-shift.cyclic.app/movies")
+                const response = await fetch(`${api}/movies`)
                 const data = await response.json();
                 setMovies(data);
             } catch (error) {
