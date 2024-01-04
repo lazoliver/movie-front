@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-const api = "https://long-lime-gorilla-hat.cyclic.app";
-
 const PageTitle = styled.h2`
     font-size: 20px;
 `
@@ -38,7 +36,7 @@ function Movie() {
     useEffect(() => {
         const getMovie = async() => {
             try {
-                const response = await fetch(`${api}/movies/${id}`)
+                const response = await fetch(`https://long-lime-gorilla-hat.cyclic.app/movies/${id}`)
                 const data = await response.json();
                 setMovie(data);
             } catch (error) {
@@ -72,10 +70,10 @@ function Movie() {
         <main>
             <div className="container">
                 <PageTitle>Review</PageTitle>
-                <MovieItem key={movie.movie._id} id={movie.movie._id}>
-                    <MovieTitle key={movie.movie._id}>{movie.movie.title}</MovieTitle>
-                    <MovieInfo>Comentário: {movie.movie.comment}</MovieInfo>
-                    <MovieInfo>Nota: {movie.movie.rating}</MovieInfo>
+                <MovieItem key={movie._id} id={movie._id}>
+                    <MovieTitle key={movie._id}>{movie.title}</MovieTitle>
+                    <MovieInfo>Comentário: {movie.comment}</MovieInfo>
+                    <MovieInfo>Nota: {movie.rating}</MovieInfo>
                 </MovieItem>
             </div>
         </main>
